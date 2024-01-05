@@ -42064,11 +42064,19 @@ a.u-link.u-text-hover-grey-90:hover {
         
         
         
+        
+        
+        
         --theme-sheet-width-xl: 1140px;
         --theme-sheet-width-lg: 940px;
         --theme-sheet-width-md: 720px;
         --theme-sheet-width-sm: 540px;
         --theme-sheet-width-xs: 340px;
+        
+        
+        
+        
+        
         
         
         
@@ -42114,6 +42122,7 @@ a.u-link.u-text-hover-grey-90:hover {
         line-height: 1.1;
         margin-top: 20px;
         margin-bottom: 20px;
+        font-family: 'PT Sans Caption';
         }
         h3
         {
@@ -42239,6 +42248,11 @@ a.u-link.u-text-hover-grey-90:hover {
         h2:not(.u-subtitle)
         {
         font-size: 1.5rem;
+        font-weight: 400;
+        line-height: 1.1;
+        color: #ffffff;
+        list-icon-spacing: 0.3;
+        list-icon-size: 0.8;
         }
         }
         @media (max-width: 575px) {
@@ -42272,7 +42286,9 @@ a.u-link.u-text-hover-grey-90:hover {
         }
         .u-xs h2:not(.u-subtitle)
         {
+        font-weight: 400;
         font-size: 1.5rem;
+        line-height: 1.1;
         }
         .u-xs h3
         {
@@ -42282,6 +42298,13 @@ a.u-link.u-text-hover-grey-90:hover {
         /** cms-rules **/
 
         /** color-rules **/
+        .u-overlap.u-overlap-transparent:not(.u-overlap-contrast) .u-header :not(.u-nav-item) > h2:not(.u-subtitle),
+        .u-gradient > .u-container-layout > h2:not(.u-subtitle),
+        .u-image:not(.u-shading) > .u-container-layout > h2:not(.u-subtitle),
+        h2:not(.u-subtitle)
+        {
+        color: #ffffff;
+        }
         .u-overlap.u-overlap-transparent:not(.u-overlap-contrast) .u-header :not(.u-nav-item) > a,
         .u-gradient > .u-container-layout > a,
         .u-image:not(.u-shading) > .u-container-layout > a,
@@ -42347,6 +42370,10 @@ a.u-link.u-text-hover-grey-90:hover {
         /** color-rules **/
 
         /** alt-color-rules **/
+        .u-shading h2:not(.u-subtitle),.u-overlap-contrast .u-header h2:not(.u-subtitle):not(.u-nav-link):not(.u-btn)
+        {
+        color: #111111;
+        }
         .u-body-color a,.u-palette-1-base a,.u-palette-1-dark-3 a,.u-palette-1-dark-2 a,.u-palette-1-dark-1 a,.u-palette-1 a,.u-palette-1-light-1 a,.u-palette-2-base a,.u-palette-2-dark-3 a,.u-palette-2-dark-2 a,.u-palette-2-dark-1 a,.u-palette-2 a,.u-palette-3-dark-3 a,.u-palette-3-dark-2 a,.u-palette-3-dark-1 a,.u-palette-4-dark-3 a,.u-palette-4-dark-2 a,.u-palette-4-dark-1 a,.u-palette-5-dark-3 a,.u-palette-5-dark-2 a,.u-palette-5-dark-1 a,.u-grey-40 a,.u-grey-30 a,.u-grey-90 a,.u-grey-80 a,.u-grey-75 a,.u-black a,.u-grey-70 a,.u-grey-60 a,.u-grey-50 a,.u-grey-dark-3 a,.u-grey-dark-2 a,.u-grey-dark-1 a,.u-grey a,.u-shading a,.u-overlap-contrast .u-header a:not(.u-nav-link):not(.u-btn)
         {
         color: #ffc199;
@@ -42380,22 +42407,7 @@ a.u-link.u-text-hover-grey-90:hover {
 }
 
 .u-header .u-sheet-1 {
-  min-height: 74px;
-}
-
-.u-header .u-menu-1 {
-  font-family: size-14;
-  margin: 21px 0 0 auto;
-}
-
-.u-header .u-nav-1 {
-  font-weight: 700;
-  font-family: "PT Sans Caption";
-  font-size: 1rem;
-}
-
-.u-header .u-nav-2 {
-  font-size: 1rem;
+  min-height: 81px;
 }
 
 .u-header .u-social-icons-1 {
@@ -42403,7 +42415,7 @@ a.u-link.u-text-hover-grey-90:hover {
   min-height: 16px;
   width: 161px;
   min-width: 94px;
-  margin: -36px 99px 21px auto;
+  margin: 24px 99px 0 auto;
 }
 
 .u-header .u-icon-1 {
@@ -42425,9 +42437,34 @@ a.u-link.u-text-hover-grey-90:hover {
   height: 100%;
 }
 
+.u-header .u-menu-1 {
+  margin: -33px 281px 24px auto;
+}
 
-
-
+.u-header .u-nav-2 {
+  font-size: 1.25rem;
+}
+@media (max-width: 1199px) {
+  .u-header .u-menu-1 {
+    margin-top: -33px;
+    margin-right: 281px;
+  }
+}
+@media (max-width: 991px) {
+  .u-header .u-menu-1 {
+    margin-right: 215px;
+  }
+}
+@media (max-width: 767px) {
+  .u-header .u-menu-1 {
+    margin-right: 161px;
+  }
+}
+@media (max-width: 575px) {
+  .u-header .u-menu-1 {
+    margin-right: 101px;
+  }
+}
  .u-footer {
   background-image: none;
   margin-top: 20px;
