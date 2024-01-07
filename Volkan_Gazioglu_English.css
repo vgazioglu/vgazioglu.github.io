@@ -46,7 +46,6 @@
   }
 } .u-section-2 {
   background-image: url("/images/alessio-soggetti-cfKC0UOZHJo-unsplash.jpg");
-  background-position: 50% 50%;
 }
 
 .u-section-2 .u-sheet-1 {
@@ -224,6 +223,10 @@
 }
 
 @media (max-width: 1199px) {
+   .u-section-2 {
+    background-position: 50% 50%;
+  }
+
   .u-section-2 .u-sheet-1 {
     min-height: 1113px;
   }
@@ -427,10 +430,6 @@
 }
 
 @media (max-width: 575px) {
-   .u-section-2 {
-    background-position: 50% 50%;
-  }
-
   .u-section-2 .u-sheet-1 {
     min-height: 2521px;
   }
@@ -1196,7 +1195,7 @@
 
 .u-section-3-6 .u-text-1 {
   font-family: "PT Sans Caption";
-  margin: 5px 0 0;
+  margin: 0;
 }
 
 .u-section-3-6 .u-layout-cell-3 {
@@ -2164,11 +2163,11 @@
   }
 
   .u-section-3-14 .u-layout-cell-2 {
-    min-height: 84px;
+    min-height: 82px;
   }
 
   .u-section-3-14 .u-layout-cell-3 {
-    min-height: 195px;
+    min-height: 228px;
   }
 }
 
@@ -2178,7 +2177,7 @@
   }
 
   .u-section-3-14 .u-layout-cell-2 {
-    min-height: 63px;
+    min-height: 69px;
   }
 
   .u-section-3-14 .u-layout-cell-3 {
@@ -2282,11 +2281,11 @@
   }
 
   .u-section-3-15 .u-layout-cell-2 {
-    min-height: 82px;
+    min-height: 84px;
   }
 
   .u-section-3-15 .u-layout-cell-3 {
-    min-height: 228px;
+    min-height: 195px;
   }
 }
 
@@ -2296,7 +2295,7 @@
   }
 
   .u-section-3-15 .u-layout-cell-2 {
-    min-height: 69px;
+    min-height: 63px;
   }
 
   .u-section-3-15 .u-layout-cell-3 {
