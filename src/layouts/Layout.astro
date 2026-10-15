@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import MediaModal from '../components/MediaModal.astro';
+import DynamicBackground from '../components/DynamicBackground.astro';
 import { siteConfig } from '../data/i18n';
 
 interface Props {
@@ -120,12 +121,8 @@ const schemaData = {
     </script>
   </head>
   <body class="min-h-screen flex flex-col font-sans relative selection:bg-brand-300 selection:text-neutral-900">
-    <!-- Nagare Ambient Dynamic Gradient Glow -->
-    <div class="ambient-glow-wrapper" aria-hidden="true">
-      <div class="ambient-blob ambient-blob-1"></div>
-      <div class="ambient-blob ambient-blob-2"></div>
-      <div class="ambient-blob ambient-blob-3"></div>
-    </div>
+    <!-- Interactive Procedural Dynamic Gradient SVG Background (Nagare) -->
+    <DynamicBackground />
 
     <!-- Foreground Content Layer -->
     <div class="relative z-10 flex flex-col min-h-screen">

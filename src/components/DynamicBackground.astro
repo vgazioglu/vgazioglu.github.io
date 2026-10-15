@@ -1,0 +1,379 @@
+---
+// Component: DynamicBackground.astro
+// Direct implementation of Nagare's generative, interactive ambient SVG background
+---
+
+<div id="dynamic-background-container" aria-hidden="true">
+  <svg id="dynamic-background-svg" width="100%" height="100%"></svg>
+</div>
+
+<style>
+  #dynamic-background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    filter: blur(40px);
+    opacity: var(--dynamic-bg-opacity, 0.45);
+    transition: filter 0.3s ease, opacity 0.3s ease;
+  }
+
+  @media (min-width: 768px) {
+    #dynamic-background-container {
+      filter: blur(65px);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    #dynamic-background-container {
+      filter: blur(85px);
+    }
+  }
+
+  #dynamic-background-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  :global(#dynamic-background-svg.css-hue-shift-active) {
+    animation: hue-rotate-anim 55s linear infinite;
+  }
+
+  @keyframes hue-rotate-anim {
+    0% {
+      filter: hue-rotate(0deg);
+    }
+    50% {
+      filter: hue-rotate(180deg);
+    }
+    100% {
+      filter: hue-rotate(360deg);
+    }
+  }
+</style>
+
+<script>
+  function initDynamicBackground() {
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const svg = document.getElementById('dynamic-background-svg');
+    if (!svg) return;
+
+    svg.classList.add('css-hue-shift-active');
+
+    const isMobile =
+      ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0) ||
+      window.innerWidth < 1024;
+
+    const config = {
+      numBlobs: isMobile ? 3 : 5,
+      baseLargeMinBlobSize: 850,
+      baseLargeMaxBlobSize: 1400,
+      baseSmallMinBlobSize: 550,
+      baseSmallMaxBlobSize: 900,
+      referenceWidth: 1440,
+      minScaleFactor: 0.5,
+      maxScaleFactor: 1.5,
+      speedMultiplier: isMobile ? 0.4 : 0.75,
+      mouseInfluenceRadius: 520,
+      mouseForce: -600,
+      opacity: 0.85,
+      enableMouseInteraction: true,
+      enableCollisionDetection: true,
+    };
+
+    // Rich color schemes from Nagare
+    const colorSchemes: Record<string, string[]> = {
+      nagareBrand: ['#e0c9a6', '#64f5ed', '#ff7a59', '#7de6ff', '#f59e0b', '#a78bfa'],
+      cyans: ['#40e0d0', '#afeeee', '#7fffd4', '#b3e0f2', '#64f5ed'],
+      blues: ['#87ceeb', '#64f5ed', '#7de6ff', '#42d5ff', '#7299f9'],
+      purples: ['#996bcb', '#c2aff7', '#8267d7', '#ff55ff', '#e264d0'],
+      sunset: ['#ff6b6b', '#ffd93d', '#f2bf47', '#f28706', '#f26430'],
+      aurora: ['#64f5ed', '#ffd700', '#32cd32', '#38bdf8', '#c084fc'],
+    };
+
+    function random(min: number, max: number) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function generateBlobPoints(
+      cx: number,
+      cy: number,
+      radius: number,
+      irregularity: number,
+      spike: number,
+      numPoints: number
+    ) {
+      const points = [];
+      const angles = [];
+      const radii = [];
+      const angleStep = (Math.PI * 2) / numPoints;
+
+      for (let i = 0; i < numPoints; i++) {
+        const angle = i * angleStep;
+        angles.push(angle);
+        let r = radius + random(-irregularity, irregularity) * radius;
+        r += random(0, spike) * radius;
+        r = Math.max(radius * 0.2, r);
+        radii.push(r);
+        points.push({
+          x: cx + Math.cos(angle) * r,
+          y: cy + Math.sin(angle) * r,
+        });
+      }
+      return { points, angles, radii };
+    }
+
+    function pointsToPath(points: { x: number; y: number }[]) {
+      if (points.length < 3) return '';
+      let path = `M ${points[0].x} ${points[0].y}`;
+      const len = points.length;
+
+      for (let i = 0; i < len; i++) {
+        const prev = points[(i - 1 + len) % len];
+        const curr = points[i];
+        const next = points[(i + 1) % len];
+        const nextNext = points[(i + 2) % len];
+
+        const cp1x = curr.x + (next.x - prev.x) / 6;
+        const cp1y = curr.y + (next.y - prev.y) / 6;
+        const cp2x = next.x - (nextNext.x - curr.x) / 6;
+        const cp2y = next.y - (nextNext.y - curr.y) / 6;
+
+        path += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${next.x} ${next.y}`;
+      }
+      return path + ' Z';
+    }
+
+    let blobs: any[] = [];
+    let mousePos: { x: number; y: number } | null = null;
+    let containerGroup: SVGGElement | null = null;
+    const targetParallax = { x: 0, y: 0 };
+    const currentParallax = { x: 0, y: 0 };
+    const PARALLAX_LERP = 0.05;
+    const PARALLAX_FACTOR = -0.025;
+
+    let bounds = { width: 0, height: 0, left: 0, top: 0 };
+    let needsBoundsUpdate = true;
+
+    function updateBounds() {
+      if (svg && needsBoundsUpdate) {
+        const rect = svg.getBoundingClientRect();
+        bounds = {
+          width: rect.width || window.innerWidth,
+          height: rect.height || window.innerHeight,
+          left: rect.left,
+          top: rect.top,
+        };
+        needsBoundsUpdate = false;
+      }
+    }
+
+    function createBlob(
+      id: number,
+      minRadius: number,
+      maxRadius: number,
+      color: string,
+      width: number,
+      height: number
+    ) {
+      const radius = random(minRadius / 2, maxRadius / 2);
+      const position = {
+        x: random(radius, Math.max(radius + 1, width - radius)),
+        y: random(radius, Math.max(radius + 1, height - radius)),
+      };
+
+      const shapeData = generateBlobPoints(0, 0, radius, 0.35, 0.25, 8);
+      const pathString = pointsToPath(shapeData.points);
+
+      const velocity = {
+        x: random(-1, 1) * config.speedMultiplier,
+        y: random(-1, 1) * config.speedMultiplier,
+      };
+
+      const angle = random(0, 360);
+      const angularVelocity = random(-0.15, 0.15);
+
+      const pathElem = document.createElementNS(svgNS, 'path');
+      pathElem.setAttribute('d', pathString);
+      pathElem.setAttribute('fill', color);
+      pathElem.setAttribute('transform', `translate(${position.x}, ${position.y}) rotate(${angle})`);
+      pathElem.style.opacity = String(config.opacity);
+
+      containerGroup?.appendChild(pathElem);
+
+      return {
+        id,
+        pathElement: pathElem,
+        position,
+        velocity,
+        radius,
+        color,
+        angle,
+        angularVelocity,
+        update: function (
+          mouse: { x: number; y: number } | null,
+          allBlobs: any[],
+          boxWidth: number,
+          boxHeight: number
+        ) {
+          // Movement
+          this.position.x += this.velocity.x;
+          this.position.y += this.velocity.y;
+          this.angle += this.angularVelocity;
+
+          // Mouse Repulsion
+          if (config.enableMouseInteraction && mouse) {
+            const dx = this.position.x - mouse.x;
+            const dy = this.position.y - mouse.y;
+            const distSq = dx * dx + dy * dy;
+            const influence = config.mouseInfluenceRadius + this.radius * 0.8;
+            const influenceSq = influence * influence;
+
+            if (distSq < influenceSq && distSq > 0) {
+              const dist = Math.sqrt(distSq);
+              const factor = Math.pow((influence - dist) / influence, 1.4);
+              const angleToMouse = Math.atan2(dy, dx);
+              this.velocity.x += Math.cos(angleToMouse) * factor * config.mouseForce * 0.003;
+              this.velocity.y += Math.sin(angleToMouse) * factor * config.mouseForce * 0.003;
+            }
+          }
+
+          // Speed limit
+          const speed = Math.sqrt(this.velocity.x ** 2 + this.velocity.y ** 2);
+          const maxSpeed = 1.8 * config.speedMultiplier;
+          if (speed > maxSpeed) {
+            this.velocity.x = (this.velocity.x / speed) * maxSpeed;
+            this.velocity.y = (this.velocity.y / speed) * maxSpeed;
+          }
+
+          // Damping
+          this.velocity.x *= 0.995;
+          this.velocity.y *= 0.995;
+
+          // Soft boundary bounce
+          const margin = this.radius * 0.5;
+          const pushForce = 0.04 * config.speedMultiplier;
+
+          if (this.position.x < margin) this.velocity.x += pushForce;
+          if (this.position.x > boxWidth - margin) this.velocity.x -= pushForce;
+          if (this.position.y < margin) this.velocity.y += pushForce;
+          if (this.position.y > boxHeight - margin) this.velocity.y -= pushForce;
+
+          // Hard constraint
+          this.position.x = Math.max(margin * 0.5, Math.min(boxWidth - margin * 0.5, this.position.x));
+          this.position.y = Math.max(margin * 0.5, Math.min(boxHeight - margin * 0.5, this.position.y));
+
+          this.pathElement.setAttribute(
+            'transform',
+            `translate(${this.position.x}, ${this.position.y}) rotate(${this.angle})`
+          );
+        },
+      };
+    }
+
+    function initBlobs() {
+      if (!svg) return;
+      blobs = [];
+      svg.innerHTML = '';
+      containerGroup = document.createElementNS(svgNS, 'g');
+      svg.appendChild(containerGroup);
+
+      updateBounds();
+      const { width, height } = bounds;
+      const scale = Math.max(
+        config.minScaleFactor,
+        Math.min(config.maxScaleFactor, window.innerWidth / config.referenceWidth)
+      );
+
+      const largeMin = config.baseLargeMinBlobSize * scale;
+      const largeMax = config.baseLargeMaxBlobSize * scale;
+      const smallMin = config.baseSmallMinBlobSize * scale;
+      const smallMax = config.baseSmallMaxBlobSize * scale;
+
+      // Select Nagare brand + aurora color set
+      const schemeKeys = Object.keys(colorSchemes);
+      const chosenKey = schemeKeys[Math.floor(Math.random() * schemeKeys.length)];
+      const palette = colorSchemes[chosenKey];
+
+      const half = Math.ceil(config.numBlobs / 2);
+      for (let i = 0; i < half; i++) {
+        blobs.push(createBlob(i, largeMin, largeMax, palette[i % palette.length], width, height));
+      }
+      for (let i = half; i < config.numBlobs; i++) {
+        blobs.push(createBlob(i, smallMin, smallMax, palette[i % palette.length], width, height));
+      }
+    }
+
+    let animationFrameId: number | null = null;
+    let lastTime = performance.now();
+    const targetFps = 1000 / 60;
+
+    function render(time: number) {
+      animationFrameId = requestAnimationFrame(render);
+      const elapsed = time - lastTime;
+      if (elapsed < targetFps) return;
+      lastTime = time - (elapsed % targetFps);
+
+      updateBounds();
+      const { width, height } = bounds;
+
+      if (containerGroup) {
+        currentParallax.x += (targetParallax.x - currentParallax.x) * PARALLAX_LERP;
+        currentParallax.y += (targetParallax.y - currentParallax.y) * PARALLAX_LERP;
+        containerGroup.setAttribute(
+          'transform',
+          `translate(${currentParallax.x}, ${currentParallax.y})`
+        );
+      }
+
+      for (let i = 0; i < blobs.length; i++) {
+        blobs[i].update(mousePos, blobs, width, height);
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      needsBoundsUpdate = true;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!config.enableMouseInteraction) return;
+      updateBounds();
+      mousePos = {
+        x: e.clientX - bounds.left,
+        y: e.clientY - bounds.top,
+      };
+
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      targetParallax.x = (e.clientX - centerX) * PARALLAX_FACTOR;
+      targetParallax.y = (e.clientY - centerY) * PARALLAX_FACTOR;
+    });
+
+    window.addEventListener('mouseleave', () => {
+      mousePos = null;
+      targetParallax.x = 0;
+      targetParallax.y = 0;
+    });
+
+    initBlobs();
+    animationFrameId = requestAnimationFrame(render);
+
+    document.addEventListener('astro:before-preparation', () => {
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      blobs = [];
+    });
+  }
+
+  // Run on first load and on view transitions
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDynamicBackground);
+  } else {
+    initDynamicBackground();
+  }
+  document.addEventListener('astro:page-load', initDynamicBackground);
+</script>
