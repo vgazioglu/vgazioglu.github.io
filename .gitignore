@@ -20,6 +20,7 @@ pnpm-debug.log*
 # Local backups and extraction scratch
 legacy_backup/
 site_content.json
+exact_content.json
 
 # OS files
 .DS_Store

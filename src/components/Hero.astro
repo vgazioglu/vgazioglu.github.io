@@ -1,126 +1,57 @@
 ---
-import { siteConfig, translations } from '../data/i18n';
+import { siteData } from '../data/verbatimContent';
 
 interface Props {
   lang: 'tr' | 'en';
 }
 
 const { lang } = Astro.props;
-const t = translations[lang];
+const data = siteData[lang];
 ---
 
-<section id="about" class="relative pt-12 pb-16 md:pt-20 md:pb-24 overflow-hidden">
-  <!-- Ambient background glow (Nagare style) -->
-  <div class="absolute inset-0 pointer-events-none nagare-glow"></div>
-
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+<section id="about" class="py-12 md:py-20 relative overflow-hidden">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center">
       
-      <!-- Left Column: Bio & Core Info (7 cols) -->
-      <div class="lg:col-span-7 flex flex-col items-start space-y-6">
+      <!-- Profile Picture (md: 4 cols) -->
+      <div class="md:col-span-5 flex justify-center md:justify-start">
+        <div class="relative w-full max-w-sm rounded-2xl overflow-hidden glass-panel p-2 shadow-xl">
+          <div class="relative rounded-xl overflow-hidden aspect-[4/5] bg-zinc-100 dark:bg-zinc-900">
+            <img
+              src="/images/20210701_115414.jpg"
+              alt="Volkan Gazioğlu"
+              class="w-full h-full object-cover object-center"
+              loading="eager"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Content (md: 7 cols) - Name, Quote, Divider, Bio -->
+      <div class="md:col-span-7 flex flex-col space-y-6">
         
-        <!-- Live status badge -->
-        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-brand-500/10 text-brand-700 dark:text-brand-300 border border-brand-500/20">
-          <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
-          </span>
-          <span>{t.hero.badge}</span>
-        </div>
+        <!-- Name -->
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50">
+          {data.name}
+        </h1>
 
-        <!-- Name & Subheading -->
-        <div class="space-y-3">
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50">
-            Volkan Gazioğlu
-          </h1>
-          <p class="text-lg sm:text-xl font-medium text-brand-600 dark:text-brand-400">
-            {lang === 'tr' 
-              ? 'Bilişim & İletişim Teknolojileri Uzmanı | Açık Kaynak Savunucusu' 
-              : 'ICT Expert, Network Architect & Open Source Advocate'}
+        <!-- Quote -->
+        <div class="space-y-2">
+          <p class="font-serif italic text-base sm:text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            "{data.quote}"
           </p>
         </div>
 
-        <!-- Bio Paragraphs -->
-        <div class="space-y-4 text-base sm:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed max-w-2xl">
-          <p>
-            {siteConfig.bio[lang][0]}
-          </p>
-          <p>
-            {siteConfig.bio[lang][1]}
-          </p>
-        </div>
+        <!-- Divider Line -->
+        <div class="w-full h-px bg-neutral-300 dark:bg-zinc-800"></div>
 
-        <!-- Call to actions -->
-        <div class="flex flex-wrap items-center gap-4 pt-2">
-          <a
-            href="#timeline"
-            class="inline-flex items-center justify-center px-6 py-3 rounded-xl font-medium text-sm text-white bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white shadow-sm hover:shadow transition-all group"
-          >
-            <span>{t.hero.exploreTimeline}</span>
-            <svg class="w-4 h-4 ml-2 group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-          </a>
-          <a
-            href={`mailto:${siteConfig.email}`}
-            class="inline-flex items-center justify-center px-6 py-3 rounded-xl font-medium text-sm text-zinc-800 dark:text-zinc-200 glass-panel glass-panel-hover"
-          >
-            <span>{t.hero.contactMe}</span>
-            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-            </svg>
-          </a>
-        </div>
-
-        <!-- Stats strip -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-4 w-full">
-          {siteConfig.stats.map(stat => (
-            <div class="glass-panel p-3.5 rounded-xl flex flex-col">
-              <span class="text-xl sm:text-2xl font-bold font-mono tracking-tight text-zinc-900 dark:text-zinc-100">
-                {stat.number}
-              </span>
-              <span class="text-xs text-zinc-500 dark:text-zinc-400 mt-1 line-clamp-2">
-                {lang === 'tr' ? stat.labelTr : stat.labelEn}
-              </span>
-            </div>
+        <!-- Bio Paragraphs (Verbatim) -->
+        <div class="space-y-4 text-sm sm:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed font-normal">
+          {data.bio.map(paragraph => (
+            <p>{paragraph}</p>
           ))}
         </div>
 
-      </div>
-
-      <!-- Right Column: Visual Portrait & Philosophy Preview (5 cols) -->
-      <div class="lg:col-span-5 flex flex-col items-center lg:items-end">
-        <div class="relative w-full max-w-sm">
-          
-          <!-- Portrait Frame -->
-          <div class="relative rounded-2xl p-2 bg-gradient-to-b from-brand-500/20 via-zinc-200/50 to-transparent dark:from-brand-500/20 dark:via-zinc-800/50 shadow-2xl">
-            <div class="relative rounded-xl overflow-hidden aspect-[4/5] bg-zinc-100 dark:bg-zinc-900">
-              <img
-                src="/images/20210701_115414.jpg"
-                alt="Volkan Gazioğlu"
-                class="w-full h-full object-cover object-center filter contrast-[1.02] brightness-[1.01]"
-                loading="eager"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent"></div>
-              
-              <!-- Floating info tag -->
-              <div class="absolute bottom-4 left-4 right-4 p-3 rounded-lg backdrop-blur-md bg-zinc-900/80 border border-zinc-700/60 text-white">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="text-xs font-semibold tracking-wide uppercase text-brand-300">İletişim & Ağ Öncüsü</p>
-                    <p class="text-sm font-medium text-zinc-200">Volkan Gazioğlu</p>
-                  </div>
-                  <span class="px-2 py-1 text-[11px] font-mono bg-brand-500/20 text-brand-300 rounded border border-brand-500/30">
-                    EgeNet & TTT
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Subtle Decorative Accent -->
-          <div class="absolute -bottom-4 -right-4 w-28 h-28 bg-brand-500/10 rounded-full blur-2xl pointer-events-none -z-10"></div>
-        </div>
       </div>
 
     </div>

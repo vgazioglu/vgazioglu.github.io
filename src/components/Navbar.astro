@@ -35,11 +35,9 @@ const targetLangUrl = lang === 'tr' ? '/en' : '/';
 
     <!-- Desktop Navigation -->
     <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-600 dark:text-zinc-300">
-      <a href="#about" class="hover:text-zinc-900 dark:hover:text-white transition-colors">{t.nav.about}</a>
-      <a href="#timeline" class="hover:text-zinc-900 dark:hover:text-white transition-colors">{t.nav.timeline}</a>
-      <a href="#expertise" class="hover:text-zinc-900 dark:hover:text-white transition-colors">{t.nav.expertise}</a>
-      <a href="#philosophy" class="hover:text-zinc-900 dark:hover:text-white transition-colors">{t.nav.philosophy}</a>
-      <a href="#contact" class="hover:text-zinc-900 dark:hover:text-white transition-colors">{t.nav.contact}</a>
+      <a href="#about" class="hover:text-zinc-900 dark:hover:text-white transition-colors">{lang === 'tr' ? 'Hakkında' : 'About'}</a>
+      <a href="#timeline" class="hover:text-zinc-900 dark:hover:text-white transition-colors">{lang === 'tr' ? 'Kronoloji' : 'Timeline'}</a>
+      <a href={`mailto:${siteConfig.email}`} class="hover:text-zinc-900 dark:hover:text-white transition-colors">{lang === 'tr' ? 'İletişim' : 'Contact'}</a>
     </nav>
 
     <!-- Controls (Social, Lang, Theme) -->
@@ -122,11 +120,9 @@ const targetLangUrl = lang === 'tr' ? '/en' : '/';
 
   <!-- Mobile Drawer Menu -->
   <div id="mobile-menu" class="hidden md:hidden border-t border-neutral-200 dark:border-zinc-800 bg-neutral-50 dark:bg-zinc-950 px-4 py-4 space-y-3">
-    <a href="#about" class="block py-1.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-brand-500">{t.nav.about}</a>
-    <a href="#timeline" class="block py-1.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-brand-500">{t.nav.timeline}</a>
-    <a href="#expertise" class="block py-1.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-brand-500">{t.nav.expertise}</a>
-    <a href="#philosophy" class="block py-1.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-brand-500">{t.nav.philosophy}</a>
-    <a href="#contact" class="block py-1.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-brand-500">{t.nav.contact}</a>
+    <a href="#about" class="block py-1.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-brand-500">{lang === 'tr' ? 'Hakkında' : 'About'}</a>
+    <a href="#timeline" class="block py-1.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-brand-500">{lang === 'tr' ? 'Kronoloji' : 'Timeline'}</a>
+    <a href={`mailto:${siteConfig.email}`} class="block py-1.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-brand-500">{lang === 'tr' ? 'İletişim' : 'Contact'}</a>
     <div class="pt-3 border-t border-neutral-200 dark:border-zinc-800 flex items-center gap-4">
       <a href={siteConfig.social.linkedin} target="_blank" rel="noopener noreferrer" class="text-xs text-zinc-600 dark:text-zinc-400">LinkedIn</a>
       <a href={siteConfig.social.youtube} target="_blank" rel="noopener noreferrer" class="text-xs text-zinc-600 dark:text-zinc-400">YouTube</a>
