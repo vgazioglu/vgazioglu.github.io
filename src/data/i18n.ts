@@ -6,7 +6,7 @@ export const siteConfig = {
   descriptionEn: 'Working in ICT for over 30 years, Volkan Gazioglu played a pioneering role in the inception and expansion of the Internet in Turkey.',
   url: 'https://intellige.net',
   author: 'Volkan Gazioğlu',
-  email: 'volkan@intellige.net',
+  email: 'gazioglu@intellige.net',
   social: {
     linkedin: 'https://www.linkedin.com/in/volkangazioglu/',
     youtube: 'https://www.youtube.com/@volkangazioglu',
