@@ -18,7 +18,7 @@ const data = siteData[lang];
       <!-- Profile Picture (lg: 4 cols) -->
       <div class="lg:col-span-4 flex justify-center lg:justify-start">
         <div class="w-full max-w-xs rounded-2xl overflow-hidden glass-panel p-2 shadow-lg">
-          <div class="aspect-[4/5] rounded-xl overflow-hidden bg-neutral-200 dark:bg-darkbg-surface">
+          <div class="aspect-[4/5] rounded-xl overflow-hidden bg-neutral-200 dark:bg-neutral-900">
             <img
               src="/images/20210701_115414.jpg"
               alt="Volkan Gazioğlu"
@@ -45,7 +45,7 @@ const data = siteData[lang];
 
         <!-- Optional Embedded Talk Video from Original Site -->
         {data.heroVideo && (
-          <div class="w-full rounded-xl overflow-hidden aspect-video bg-neutral-900 border border-neutral-200 dark:border-darkbg-border shadow-sm">
+          <div class="w-full rounded-xl overflow-hidden aspect-video bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-sm">
             <iframe
               src={data.heroVideo}
               title="Andrew Liveris"
@@ -61,7 +61,7 @@ const data = siteData[lang];
     </div>
 
     <!-- Divider Line -->
-    <div class="w-full h-px bg-neutral-200 dark:bg-darkbg-border"></div>
+    <div class="w-full h-px bg-neutral-200 dark:bg-neutral-800"></div>
 
     <!-- Bottom Block: 4 Bio Paragraphs (2 Columns, matching original layout) -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 text-sm sm:text-base leading-relaxed">

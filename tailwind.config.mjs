@@ -18,12 +18,6 @@ export default {
           800: '#694c32',
           900: '#533c2a',
         },
-        darkbg: {
-          DEFAULT: '#111111',
-          surface: '#181818',
-          card: '#1f1f1f',
-          border: '#2e2e2e'
-        }
       },
       fontFamily: {
         sans: [
