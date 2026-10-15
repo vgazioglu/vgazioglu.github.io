@@ -9,76 +9,61 @@ const { lang } = Astro.props;
 const data = siteData[lang];
 ---
 
-<section id="timeline" class="py-12 md:py-20 relative border-t border-neutral-200/80 dark:border-zinc-800/80">
+<section id="timeline" class="py-12 sm:py-16 md:py-20 border-t border-neutral-200 dark:border-darkbg-border">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Milestones List -->
-    <div class="space-y-16 md:space-y-24">
+    <div class="space-y-12 sm:space-y-16">
       {data.milestones.map((m, index) => {
         const isEven = index % 2 === 1;
 
         return (
-          <article class="glass-panel glass-panel-hover rounded-2xl p-6 sm:p-8 md:p-10 overflow-hidden">
-            <div class={`grid grid-cols-1 md:grid-cols-12 gap-8 items-center ${isEven ? 'md:grid-flow-dense' : ''}`}>
+          <article class="glass-panel glass-panel-hover rounded-2xl p-5 sm:p-7 md:p-8 overflow-hidden">
+            <div class={`grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center ${isEven ? 'md:grid-flow-dense' : ''}`}>
               
               <!-- Media Column (md: 5 cols) -->
               <div class={`md:col-span-5 ${isEven ? 'md:col-start-8' : ''}`}>
                 {m.image && (
                   <div
-                    class="group relative rounded-2xl overflow-hidden glass-panel border border-neutral-300/80 dark:border-zinc-800/90 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
+                    class="group relative rounded-xl overflow-hidden bg-neutral-100 dark:bg-darkbg-surface border border-neutral-200 dark:border-darkbg-border cursor-pointer shadow-sm hover:border-brand/50 transition-colors"
                     data-zoom-src={m.image}
                     data-zoom-title={m.title}
                     data-zoom-caption={m.desc}
                   >
                     <!-- Uniform fixed aspect ratio container -->
-                    <div class="relative aspect-[4/3] w-full overflow-hidden flex items-center justify-center bg-neutral-200/40 dark:bg-zinc-950/80">
+                    <div class="relative aspect-[4/3] w-full overflow-hidden flex items-center justify-center p-3 sm:p-4">
                       
-                      <!-- Blurred Ambient Color Fill from image itself -->
+                      <!-- Blurred Ambient Fill -->
                       <img
                         aria-hidden="true"
                         src={m.image}
                         alt=""
                         loading="lazy"
-                        class="absolute inset-0 w-full h-full object-cover filter blur-2xl opacity-35 dark:opacity-20 scale-125 select-none pointer-events-none"
+                        class="absolute inset-0 w-full h-full object-cover filter blur-2xl opacity-30 dark:opacity-20 scale-125 select-none pointer-events-none"
                       />
 
-                      <!-- Ambient gradient overlay to smooth out lighting -->
-                      <div class="absolute inset-0 bg-gradient-to-t from-neutral-900/10 via-transparent to-neutral-900/5 dark:from-black/60 dark:to-black/30 pointer-events-none"></div>
+                      <!-- Centerpiece Document / Photo -->
+                      <img
+                        src={m.image}
+                        alt={m.title}
+                        loading="lazy"
+                        class="relative z-10 max-h-full max-w-full object-contain rounded shadow-sm group-hover:scale-[1.02] transition-transform duration-200 dark:brightness-[0.98]"
+                      />
 
-                      <!-- Sharp Archival Centerpiece Image with shadow and subtle border -->
-                      <div class="relative z-10 w-full h-full p-4 sm:p-5 flex items-center justify-center">
-                        <img
-                          src={m.image}
-                          alt={m.title}
-                          loading="lazy"
-                          class="max-h-full max-w-full object-contain rounded-lg shadow-md group-hover:scale-[1.03] transition-transform duration-300 ring-1 ring-black/10 dark:ring-white/10 dark:brightness-[0.98] dark:contrast-[1.02]"
-                        />
-                      </div>
-
-                      <!-- Subtle Badge: Archival Document -->
-                      <div class="absolute top-3 left-3 z-20 inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-medium tracking-wide bg-neutral-900/60 text-white/90 dark:bg-black/70 dark:text-zinc-300 backdrop-blur-md border border-white/10">
-                        <svg class="w-3 h-3 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                      <!-- Hover Zoom Prompt -->
+                      <div class="absolute inset-0 z-20 bg-neutral-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-white text-xs font-medium backdrop-blur-[2px]">
+                        <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
                         </svg>
-                        <span>{lang === 'tr' ? 'Arşiv Dokümanı' : 'Archive Item'}</span>
-                      </div>
-
-                      <!-- Hover Overlay Action Prompt -->
-                      <div class="absolute inset-0 z-20 bg-zinc-950/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-medium text-xs backdrop-blur-[2px]">
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20 dark:bg-white/15 backdrop-blur-md border border-white/30 text-white shadow-lg">
-                          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
-                          </svg>
-                          <span>{lang === 'tr' ? 'Büyüt / İncele' : 'Inspect'}</span>
-                        </span>
+                        <span>{lang === 'tr' ? 'Büyüt' : 'Zoom'}</span>
                       </div>
                     </div>
                   </div>
                 )}
 
                 {m.video && (
-                  <div class="group relative rounded-2xl overflow-hidden glass-panel border border-neutral-300/80 dark:border-zinc-800/90 shadow-md">
-                    <div class="relative aspect-[4/3] w-full bg-zinc-950 flex items-center justify-center">
+                  <div class="rounded-xl overflow-hidden border border-neutral-200 dark:border-darkbg-border shadow-sm">
+                    <div class="relative aspect-[4/3] w-full bg-neutral-950 flex items-center justify-center">
                       <iframe
                         src={m.video}
                         title={m.title}
@@ -87,30 +72,24 @@ const data = siteData[lang];
                         allowfullscreen
                         class="absolute inset-0 w-full h-full border-0"
                       ></iframe>
-                      <div class="absolute top-3 left-3 z-20 inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-medium tracking-wide bg-neutral-900/60 text-white/90 dark:bg-black/70 dark:text-zinc-300 backdrop-blur-md border border-white/10 pointer-events-none">
-                        <svg class="w-3 h-3 text-red-400" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
-                        </svg>
-                        <span>{lang === 'tr' ? 'Video Kaydı' : 'Video Record'}</span>
-                      </div>
                     </div>
                   </div>
                 )}
               </div>
 
               <!-- Text Content Column (md: 7 cols) -->
-              <div class={`md:col-span-7 flex flex-col space-y-4 ${isEven ? 'md:col-start-1' : ''}`}>
-                <div class="flex items-center gap-3">
-                  <span class="text-xs font-mono font-semibold text-brand-600 dark:text-brand-400">
+              <div class={`md:col-span-7 flex flex-col space-y-3 ${isEven ? 'md:col-start-1' : ''}`}>
+                <div class="flex items-center gap-2.5">
+                  <span class="text-xs font-mono font-bold text-brand-600 dark:text-brand">
                     #{String(m.id).padStart(2, '0')}
                   </span>
-                  <div class="h-3 w-px bg-neutral-300 dark:bg-zinc-700"></div>
-                  <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50">
+                  <div class="h-3 w-px bg-neutral-300 dark:bg-darkbg-border"></div>
+                  <h2 class="text-xl sm:text-2xl md:text-3xl font-bold font-serif tracking-tight text-neutral-950 dark:text-neutral-50">
                     {m.title}
                   </h2>
                 </div>
 
-                <div class="text-sm sm:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed space-y-3 whitespace-pre-line">
+                <div class="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed space-y-3 whitespace-pre-line font-normal">
                   {m.desc}
                 </div>
               </div>

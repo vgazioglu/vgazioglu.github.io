@@ -12,7 +12,13 @@ export const siteData = {
   tr: {
     name: 'Volkan Gazioğlu',
     quote: "Kariyerimin ilk başlarında, Hong Kong’ta Çinli bir yaşlı iş adamından şu tavsiyeyi almıştım: Toplumun üç sacayağı vardır: Hukuk, mantık ve ilişkiler. Batı’da bunların öncelikli sıralaması şöyledir: Birincisi hukuk, ikincisi mantık ve üçüncüsü de ilişki. Doğu’da ise tam tersi: İlk önce ilişki, sonra mantık ve daha sonra, hukuk. Bunların tümü de vazgeçilmez. Ancak bilinmesi gereken asıl şey, başlangıç noktalarının farklı olduğudur. -Andrew Liveris",
-    bio: ["30 yılı aşkın süredir bilgi ve iletişim teknolojileri alanında çalışan Volkan Gazioglu, Internet'in Türkiye'ye getirilişinde ve yaygınlaştırılmasında önemli roller üstlenmiştir.", "5G, Bulut Bilişim, Nesnelerin Interneti (IoT), Yapay Zeka, Büyük Veri, Müşteri Deneyim Yönetimi gibi konularda çalışmaları olan Gazioğlu, bir Açık Yazılım destekçisidir."],
+    heroVideo: "https://www.youtube.com/embed/C9kAGHj4JFs",
+    bio: [
+      "30 yılı aşkın süredir bilgi ve iletişim teknolojileri alanında çalışan Volkan Gazioglu, Internet'in Türkiye'ye getirilişinde ve yaygınlaştırılmasında önemli roller üstlenmiştir.",
+      "İtalyan, Arap, Amerikan, İngiliz ve Çinli şirketlerde çeşitli roller üstlenen Gazioglu, Asya-Pasifik pazarında deneyim sahibidir.",
+      "Ege Üniversitesi'nde \"Ağ Yöneticisi\" olarak halkımızın ilk kez Internet'le buluşmasını sağlamış, Huawei'de \"Servis Çözüm Satış ve Pazarlama Direktörü\" olarak da mobil operatörlerimizin 4.5G hizmetleri sunabilmesine katkıda bulunmuştur.",
+      "5G, Bulut Bilişim, Nesnelerin Interneti (IoT), Yapay Zeka, Büyük Veri, Müşteri Deneyim Yönetimi gibi konularda çalışmaları olan Gazioğlu, bir Açık Yazılım destekçisidir."
+    ],
     milestones: [
       {
         id: 1,
@@ -173,7 +179,13 @@ export const siteData = {
   en: {
     name: 'Volkan Gazioğlu',
     quote: "Very early on in my career, I received the following advice from an older Chinese businessman in Hong Kong: There are three pillars to society: the rule of law, the rule of logic, and the rule of relationships. In the West, these are prioritized as follows: first law, second logic, third relationships. In the East, it's exactly the opposite: first relationships, then logic, then law. All are indispensable. But what's most important is to understand that the starting points are different. -Andrew Liveris",
-    bio: ["Volkan Gazioglu, who has been working in the field of information and communication technologies for more than 30 years, has played an important role in introducing and disseminating Internet in Turkiye.", "Gazioglu, who has worked on 5G, Cloud Computing, Internet of Things (IoT), Artificial Intelligence, Big Data, Customer Experience Management , is an Open Software supporter."],
+    heroVideo: "https://www.youtube.com/embed/C9kAGHj4JFs",
+    bio: [
+      "Volkan Gazioglu, who has been working in the field of information and communication technologies for more than 30 years, has played an important role in introducing and disseminating Internet in Turkiye.",
+      "Gazioglu has experience in the Asia-Pacific market, taking on various roles in Italian, Arabic, American, British and Chinese companies.",
+      "As the \"Network Administrator\" at Ege University, he enabled the people to meet the Internet for the first time, and contributed to mobile operators' 4.5G service offerings as the \"Service Solution Sales and Marketing Director\" at Huawei.",
+      "Gazioglu, who has worked on 5G, Cloud Computing, Internet of Things (IoT), Artificial Intelligence, Big Data, Customer Experience Management, is an Open Software supporter."
+    ],
     milestones: [
       {
         id: 1,

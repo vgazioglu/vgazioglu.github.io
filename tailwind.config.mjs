@@ -6,35 +6,35 @@ export default {
     extend: {
       colors: {
         brand: {
-          50: '#fbf8f3',
-          100: '#f5efe4',
+          DEFAULT: '#e0c9a6',
+          50: '#faf6f0',
+          100: '#f5ede0',
           200: '#ebdcc5',
-          300: '#dec29f',
-          400: '#cea274',
-          500: '#bf8452',
-          600: '#b06f44',
-          700: '#92573a',
-          800: '#774734',
-          900: '#613c2d',
-          950: '#351e16',
+          300: '#e0c9a6',
+          400: '#cfb186',
+          500: '#bd9665',
+          600: '#a37a4b',
+          700: '#835f3b',
+          800: '#694c32',
+          900: '#533c2a',
         },
-        accent: {
-          DEFAULT: '#3b82f6',
-          dark: '#60a5fa',
+        darkbg: {
+          DEFAULT: '#111111',
+          surface: '#181818',
+          card: '#1f1f1f',
+          border: '#2e2e2e'
         }
       },
       fontFamily: {
         sans: [
+          'Roboto',
           'Plus Jakarta Sans',
-          'Inter',
           '-apple-system',
           'BlinkMacSystemFont',
-          'Segoe UI',
-          'Roboto',
           'sans-serif',
         ],
         serif: ['Merriweather', 'Georgia', 'serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
     },
   },
