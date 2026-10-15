@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  body {
+    @apply bg-neutral-50 text-zinc-800 dark:bg-zinc-950 dark:text-zinc-200 transition-colors duration-300 antialiased selection:bg-brand-500 selection:text-white;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-zinc-300 dark:bg-zinc-700 rounded-full hover:bg-zinc-400 dark:hover:bg-zinc-600;
+}
+
+/* Glassmorphism subtle utilities */
+.glass-panel {
+  @apply bg-white/70 dark:bg-zinc-900/60 backdrop-blur-md border border-neutral-200/80 dark:border-zinc-800/80 shadow-sm;
+}
+
+.glass-panel-hover {
+  @apply transition-all duration-300 hover:border-brand-500/40 dark:hover:border-brand-400/30 hover:shadow-lg dark:hover:shadow-brand-950/20;
+}
+
+/* Nagare subtle gradient mesh */
+.nagare-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(191, 132, 82, 0.12) 0%, rgba(0, 0, 0, 0) 65%);
+}
+
+.dark .nagare-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(191, 132, 82, 0.16) 0%, rgba(9, 9, 11, 0) 70%);
+}

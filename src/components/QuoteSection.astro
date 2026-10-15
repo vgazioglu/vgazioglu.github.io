@@ -1,0 +1,80 @@
+---
+import { siteConfig, translations } from '../data/i18n';
+
+interface Props {
+  lang: 'tr' | 'en';
+}
+
+const { lang } = Astro.props;
+const t = translations[lang];
+---
+
+<section id="philosophy" class="py-16 md:py-24 relative overflow-hidden">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="glass-panel rounded-3xl p-8 sm:p-12 relative overflow-hidden border-brand-500/30 shadow-xl">
+      <!-- Decorative background icon -->
+      <div class="absolute -top-10 -right-10 text-brand-500/5 dark:text-brand-400/5 select-none pointer-events-none">
+        <svg class="w-64 h-64 fill-current" viewBox="0 0 24 24">
+          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+        </svg>
+      </div>
+
+      <div class="relative z-10 flex flex-col items-center text-center space-y-6">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-brand-500/10 text-brand-700 dark:text-brand-300 border border-brand-500/20">
+          {t.quote.heading}
+        </span>
+
+        <!-- Quote Text -->
+        <blockquote class="font-serif text-lg sm:text-2xl text-zinc-800 dark:text-zinc-100 leading-relaxed max-w-3xl italic">
+          "{siteConfig.quote[lang]}"
+        </blockquote>
+
+        <!-- Author / Attribution -->
+        <div class="pt-2 flex flex-col items-center">
+          <span class="font-bold text-base text-zinc-900 dark:text-zinc-100">
+            {siteConfig.quote.author}
+          </span>
+          <span class="text-xs text-zinc-500 dark:text-zinc-400">
+            {lang === 'tr' ? 'Eski Dow Chemical CEO\'su & Yazar' : 'Former CEO of The Dow Chemical Company'}
+          </span>
+        </div>
+
+        <!-- Comparative visual: West vs East sequencing -->
+        <div class="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-neutral-200/70 dark:border-zinc-800/80">
+          
+          <!-- West sequence -->
+          <div class="p-4 rounded-xl bg-neutral-100/60 dark:bg-zinc-900/60 border border-neutral-200/60 dark:border-zinc-800 flex flex-col items-center space-y-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">
+              {lang === 'tr' ? 'Batı Sıralaması (1 → 2 → 3)' : 'Western Sequence (1 → 2 → 3)'}
+            </span>
+            <div class="flex items-center gap-2 text-xs font-medium font-mono text-zinc-700 dark:text-zinc-300">
+              <span class="px-2 py-1 bg-white dark:bg-zinc-800 rounded border border-neutral-200 dark:border-zinc-700">{lang === 'tr' ? '1. Hukuk' : '1. Rule of Law'}</span>
+              <span>→</span>
+              <span class="px-2 py-1 bg-white dark:bg-zinc-800 rounded border border-neutral-200 dark:border-zinc-700">{lang === 'tr' ? '2. Mantık' : '2. Rule of Reason'}</span>
+              <span>→</span>
+              <span class="px-2 py-1 bg-white dark:bg-zinc-800 rounded border border-neutral-200 dark:border-zinc-700">{lang === 'tr' ? '3. İlişki' : '3. Relationships'}</span>
+            </div>
+          </div>
+
+          <!-- East sequence -->
+          <div class="p-4 rounded-xl bg-neutral-100/60 dark:bg-zinc-900/60 border border-neutral-200/60 dark:border-zinc-800 flex flex-col items-center space-y-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">
+              {lang === 'tr' ? 'Doğu Sıralaması (3 → 2 → 1)' : 'Eastern Sequence (3 → 2 → 1)'}
+            </span>
+            <div class="flex items-center gap-2 text-xs font-medium font-mono text-zinc-700 dark:text-zinc-300">
+              <span class="px-2 py-1 bg-white dark:bg-zinc-800 rounded border border-neutral-200 dark:border-zinc-700">{lang === 'tr' ? '1. İlişki' : '1. Relationships'}</span>
+              <span>→</span>
+              <span class="px-2 py-1 bg-white dark:bg-zinc-800 rounded border border-neutral-200 dark:border-zinc-700">{lang === 'tr' ? '2. Mantık' : '2. Rule of Reason'}</span>
+              <span>→</span>
+              <span class="px-2 py-1 bg-white dark:bg-zinc-800 rounded border border-neutral-200 dark:border-zinc-700">{lang === 'tr' ? '3. Hukuk' : '3. Rule of Law'}</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,130 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import MediaModal from '../components/MediaModal.astro';
+import { siteConfig } from '../data/i18n';
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: 'tr' | 'en';
+}
+
+const {
+  lang = 'tr',
+  title = lang === 'tr' ? siteConfig.title : siteConfig.titleEn,
+  description = lang === 'tr' ? siteConfig.description : siteConfig.descriptionEn,
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, siteConfig.url).href;
+const ogImage = `${siteConfig.url}/images/20210701_115415.jpg`;
+
+const schemaData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${siteConfig.url}/#person`,
+      "name": siteConfig.name,
+      "url": siteConfig.url,
+      "image": ogImage,
+      "jobTitle": "Information and Communications Technology Expert",
+      "description": description,
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Ege University"
+      },
+      "sameAs": [
+        siteConfig.social.linkedin,
+        siteConfig.social.youtube,
+        siteConfig.social.medium,
+        siteConfig.social.github
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteConfig.url}/#website`,
+      "url": siteConfig.url,
+      "name": siteConfig.name,
+      "description": description,
+      "inLanguage": lang === 'tr' ? "tr-TR" : "en-US",
+      "publisher": {
+        "@id": `${siteConfig.url}/#person`
+      }
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang={lang} class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/images/kimlik32.png" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="Volkan Gazioğlu, Volkan Gazioglu, intellige.net, EgeNet, ISPRO, TTT, Arama Motoru, Huawei, 5G, 4.5G, Açık Kaynak, Linux, CWIS, Telekomünikasyon" />
+    <meta name="author" content={siteConfig.author} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={lang === 'tr' ? 'tr_TR' : 'en_US'} />
+    <meta property="og:site_name" content={siteConfig.name} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Fonts: Plus Jakarta Sans, JetBrains Mono, Merriweather -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Merriweather:ital,wght@0,300;0,400;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+
+    <!-- Prevent FOUC Theme Script -->
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'dark'; // Default to dark obsidian
+      })();
+
+      if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col font-sans">
+    <Navbar lang={lang} />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <MediaModal />
+  </body>
+</html>

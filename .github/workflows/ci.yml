@@ -1,0 +1,33 @@
+name: Build and Verify
+
+on:
+  push:
+    branches: [ main, redesign/astro-modern ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Astro site
+        run: npm run build
+
+      - name: Verify build artifacts
+        run: |
+          test -f dist/index.html || exit 1
+          test -f dist/en/index.html || exit 1
+          test -f dist/sitemap-index.xml || exit 1
+          echo "Build verification successful!"
