@@ -89,11 +89,11 @@ const schemaData = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <!-- Fonts: Merriweather & Roboto (Original intellige.net Typography) -->
+    <!-- Fonts: EB Garamond (Editorial Serif) & Inter (Clean Sans) - Inspired by Nagare -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700&family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
 
@@ -119,12 +119,22 @@ const schemaData = {
       }
     </script>
   </head>
-  <body class="min-h-screen flex flex-col font-sans">
-    <Navbar lang={lang} />
-    <main class="flex-1">
-      <slot />
-    </main>
-    <Footer lang={lang} />
+  <body class="min-h-screen flex flex-col font-sans relative selection:bg-brand-300 selection:text-neutral-900">
+    <!-- Nagare Ambient Dynamic Gradient Glow -->
+    <div class="ambient-glow-wrapper" aria-hidden="true">
+      <div class="ambient-blob ambient-blob-1"></div>
+      <div class="ambient-blob ambient-blob-2"></div>
+      <div class="ambient-blob ambient-blob-3"></div>
+    </div>
+
+    <!-- Foreground Content Layer -->
+    <div class="relative z-10 flex flex-col min-h-screen">
+      <Navbar lang={lang} />
+      <main class="flex-1">
+        <slot />
+      </main>
+      <Footer lang={lang} />
+    </div>
     <MediaModal />
   </body>
 </html>

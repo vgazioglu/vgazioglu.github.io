@@ -9,15 +9,15 @@ const { lang } = Astro.props;
 const data = siteData[lang];
 ---
 
-<section id="about" class="py-8 sm:py-12 md:py-16">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12">
+<section id="about" class="py-10 sm:py-14 md:py-20">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
     
     <!-- Top Block: Portrait and Main Header / Quote / Video -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
       
       <!-- Profile Picture (lg: 4 cols) -->
       <div class="lg:col-span-4 flex justify-center lg:justify-start">
-        <div class="w-full max-w-xs rounded-2xl overflow-hidden glass-panel p-2 shadow-lg">
+        <div class="w-full max-w-xs rounded-2xl overflow-hidden glass-panel glass-panel-hover p-2 shadow-lg">
           <div class="aspect-[4/5] rounded-xl overflow-hidden bg-neutral-200 dark:bg-neutral-900">
             <img
               src="/images/20210701_115414.jpg"
@@ -32,20 +32,20 @@ const data = siteData[lang];
       <!-- Title, Quote & Video (lg: 8 cols) -->
       <div class="lg:col-span-8 flex flex-col space-y-6">
         
-        <div class="space-y-3">
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-serif tracking-tight text-neutral-950 dark:text-neutral-50">
+        <div class="space-y-4">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-normal font-serif tracking-tight text-neutral-900 dark:text-neutral-100">
             {data.name}
           </h1>
 
           <!-- Andrew Liveris Quote -->
-          <blockquote class="font-serif italic text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed border-l-2 border-brand pl-4 py-1">
+          <blockquote class="font-serif italic text-lg sm:text-xl text-neutral-700 dark:text-neutral-300 leading-relaxed border-l-2 border-brand/80 pl-4 py-1">
             "{data.quote}"
           </blockquote>
         </div>
 
         <!-- Optional Embedded Talk Video from Original Site -->
         {data.heroVideo && (
-          <div class="w-full rounded-xl overflow-hidden aspect-video bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-sm">
+          <div class="w-full rounded-2xl overflow-hidden aspect-video bg-neutral-900 border border-neutral-200/80 dark:border-white/10 shadow-sm">
             <iframe
               src={data.heroVideo}
               title="Andrew Liveris"
@@ -61,31 +61,31 @@ const data = siteData[lang];
     </div>
 
     <!-- Divider Line -->
-    <div class="w-full h-px bg-neutral-200 dark:bg-neutral-800"></div>
+    <div class="w-full h-px bg-neutral-200/70 dark:bg-neutral-800/70"></div>
 
     <!-- Bottom Block: 4 Bio Paragraphs (2 Columns, matching original layout) -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 text-sm sm:text-base leading-relaxed">
       
       <!-- Left Column -->
-      <div class="space-y-4 flex flex-col">
+      <div class="space-y-5 flex flex-col">
         <!-- Highlight Box 1 -->
-        <div class="p-5 rounded-xl border border-brand/40 bg-brand/5 dark:bg-brand/10 font-serif font-medium text-neutral-900 dark:text-neutral-100">
+        <div class="p-6 rounded-2xl glass-panel border border-brand/40 dark:border-brand/25 font-serif text-base sm:text-lg leading-relaxed text-neutral-800 dark:text-neutral-200 shadow-sm">
           <p>{data.bio[0]}</p>
         </div>
         <!-- Paragraph 2 -->
-        <p class="text-neutral-600 dark:text-neutral-300 px-1">
+        <p class="text-neutral-600 dark:text-neutral-400 px-1 leading-relaxed">
           {data.bio[1]}
         </p>
       </div>
 
       <!-- Right Column -->
-      <div class="space-y-4 flex flex-col">
+      <div class="space-y-5 flex flex-col">
         <!-- Paragraph 3 -->
-        <p class="text-neutral-600 dark:text-neutral-300 px-1">
+        <p class="text-neutral-600 dark:text-neutral-400 px-1 leading-relaxed">
           {data.bio[2]}
         </p>
         <!-- Highlight Box 2 -->
-        <div class="p-5 rounded-xl border border-brand/40 bg-brand/5 dark:bg-brand/10 font-serif font-medium text-neutral-900 dark:text-neutral-100">
+        <div class="p-6 rounded-2xl glass-panel border border-brand/40 dark:border-brand/25 font-serif text-base sm:text-lg leading-relaxed text-neutral-800 dark:text-neutral-200 shadow-sm">
           <p>{data.bio[3]}</p>
         </div>
       </div>

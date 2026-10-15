@@ -20,14 +20,8 @@ export default {
         },
       },
       fontFamily: {
-        sans: [
-          'Roboto',
-          'Plus Jakarta Sans',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          'sans-serif',
-        ],
-        serif: ['Merriweather', 'Georgia', 'serif'],
+        serif: ['"EB Garamond"', 'Georgia', 'serif'],
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
     },
