@@ -25,38 +25,75 @@ const data = siteData[lang];
               <div class={`md:col-span-5 ${isEven ? 'md:col-start-8' : ''}`}>
                 {m.image && (
                   <div
-                    class="group relative rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-neutral-200 dark:border-zinc-800 cursor-pointer shadow-sm"
+                    class="group relative rounded-2xl overflow-hidden glass-panel border border-neutral-300/80 dark:border-zinc-800/90 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
                     data-zoom-src={m.image}
                     data-zoom-title={m.title}
                     data-zoom-caption={m.desc}
                   >
-                    <div class="aspect-[4/3] flex items-center justify-center p-3 bg-white/50 dark:bg-zinc-950/50">
+                    <!-- Uniform fixed aspect ratio container -->
+                    <div class="relative aspect-[4/3] w-full overflow-hidden flex items-center justify-center bg-neutral-200/40 dark:bg-zinc-950/80">
+                      
+                      <!-- Blurred Ambient Color Fill from image itself -->
                       <img
+                        aria-hidden="true"
                         src={m.image}
-                        alt={m.title}
+                        alt=""
                         loading="lazy"
-                        class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                        class="absolute inset-0 w-full h-full object-cover filter blur-2xl opacity-35 dark:opacity-20 scale-125 select-none pointer-events-none"
                       />
-                    </div>
-                    <div class="absolute inset-0 bg-zinc-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-medium text-xs backdrop-blur-xs">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
-                      </svg>
-                      <span>{lang === 'tr' ? 'Büyüt' : 'Zoom'}</span>
+
+                      <!-- Ambient gradient overlay to smooth out lighting -->
+                      <div class="absolute inset-0 bg-gradient-to-t from-neutral-900/10 via-transparent to-neutral-900/5 dark:from-black/60 dark:to-black/30 pointer-events-none"></div>
+
+                      <!-- Sharp Archival Centerpiece Image with shadow and subtle border -->
+                      <div class="relative z-10 w-full h-full p-4 sm:p-5 flex items-center justify-center">
+                        <img
+                          src={m.image}
+                          alt={m.title}
+                          loading="lazy"
+                          class="max-h-full max-w-full object-contain rounded-lg shadow-md group-hover:scale-[1.03] transition-transform duration-300 ring-1 ring-black/10 dark:ring-white/10 dark:brightness-[0.98] dark:contrast-[1.02]"
+                        />
+                      </div>
+
+                      <!-- Subtle Badge: Archival Document -->
+                      <div class="absolute top-3 left-3 z-20 inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-medium tracking-wide bg-neutral-900/60 text-white/90 dark:bg-black/70 dark:text-zinc-300 backdrop-blur-md border border-white/10">
+                        <svg class="w-3 h-3 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <span>{lang === 'tr' ? 'Arşiv Dokümanı' : 'Archive Item'}</span>
+                      </div>
+
+                      <!-- Hover Overlay Action Prompt -->
+                      <div class="absolute inset-0 z-20 bg-zinc-950/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-medium text-xs backdrop-blur-[2px]">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20 dark:bg-white/15 backdrop-blur-md border border-white/30 text-white shadow-lg">
+                          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                          </svg>
+                          <span>{lang === 'tr' ? 'Büyüt / İncele' : 'Inspect'}</span>
+                        </span>
+                      </div>
                     </div>
                   </div>
                 )}
 
                 {m.video && (
-                  <div class="relative rounded-xl overflow-hidden aspect-video bg-zinc-950 border border-neutral-200 dark:border-zinc-800 shadow-sm">
-                    <iframe
-                      src={m.video}
-                      title={m.title}
-                      loading="lazy"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen
-                      class="absolute inset-0 w-full h-full border-0"
-                    ></iframe>
+                  <div class="group relative rounded-2xl overflow-hidden glass-panel border border-neutral-300/80 dark:border-zinc-800/90 shadow-md">
+                    <div class="relative aspect-[4/3] w-full bg-zinc-950 flex items-center justify-center">
+                      <iframe
+                        src={m.video}
+                        title={m.title}
+                        loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                        class="absolute inset-0 w-full h-full border-0"
+                      ></iframe>
+                      <div class="absolute top-3 left-3 z-20 inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-medium tracking-wide bg-neutral-900/60 text-white/90 dark:bg-black/70 dark:text-zinc-300 backdrop-blur-md border border-white/10 pointer-events-none">
+                        <svg class="w-3 h-3 text-red-400" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                        </svg>
+                        <span>{lang === 'tr' ? 'Video Kaydı' : 'Video Record'}</span>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
