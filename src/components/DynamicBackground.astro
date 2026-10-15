@@ -17,20 +17,20 @@
     z-index: 0;
     pointer-events: none;
     overflow: hidden;
-    filter: blur(40px);
-    opacity: var(--dynamic-bg-opacity, 0.45);
-    transition: filter 0.3s ease, opacity 0.3s ease;
+    filter: blur(50px);
+    opacity: var(--dynamic-bg-opacity, 0.35);
+    transition: filter 0.5s ease, opacity 0.5s ease;
   }
 
   @media (min-width: 768px) {
     #dynamic-background-container {
-      filter: blur(65px);
+      filter: blur(80px);
     }
   }
 
   @media (min-width: 1024px) {
     #dynamic-background-container {
-      filter: blur(85px);
+      filter: blur(110px);
     }
   }
 
@@ -41,7 +41,7 @@
   }
 
   :global(#dynamic-background-svg.css-hue-shift-active) {
-    animation: hue-rotate-anim 55s linear infinite;
+    animation: hue-rotate-anim 180s linear infinite;
   }
 
   @keyframes hue-rotate-anim {
@@ -78,10 +78,10 @@
       referenceWidth: 1440,
       minScaleFactor: 0.5,
       maxScaleFactor: 1.5,
-      speedMultiplier: isMobile ? 0.4 : 0.75,
-      mouseInfluenceRadius: 520,
-      mouseForce: -600,
-      opacity: 0.85,
+      speedMultiplier: isMobile ? 0.06 : 0.10, // Çok ağır, sakin ve dikkat dağıtmayan hareket
+      mouseInfluenceRadius: 400,
+      mouseForce: -150,
+      opacity: 0.70,
       enableMouseInteraction: true,
       enableCollisionDetection: true,
     };
@@ -196,7 +196,7 @@
       };
 
       const angle = random(0, 360);
-      const angularVelocity = random(-0.15, 0.15);
+      const angularVelocity = random(-0.015, 0.015);
 
       const pathElem = document.createElementNS(svgNS, 'path');
       pathElem.setAttribute('d', pathString);
